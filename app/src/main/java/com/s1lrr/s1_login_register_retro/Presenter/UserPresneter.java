@@ -165,13 +165,13 @@ public class UserPresneter {
     }
 
 
-    public void register(User user) {
+    public void register(User user,City city) {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("name", user.getName());
         queryMap.put("password",user.getPassword() );
         queryMap.put("mail", user.getMail());
         queryMap.put("gender", user.getGender());
-        queryMap.put("cityId", "1008");
+        queryMap.put("cityId", city.getId().toString());
         queryMap.put("districtId","1" );
         queryMap.put("address",user.getAddress() );
         queryMap.put("phone", user.getPhone());
@@ -198,7 +198,7 @@ public class UserPresneter {
 
             @Override
             public void onFailure(Call<RegisterResponce> call, Throwable t) {
-                registerView.showError("");
+                registerView.showError("error");
 
             }
         });

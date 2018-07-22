@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.s1lrr.s1_login_register_retro.Adapter.PagerAdapter;
 import com.s1lrr.s1_login_register_retro.Models.User;
@@ -22,7 +23,6 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Home");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2C3646")));
 
@@ -55,5 +55,7 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
     }
+
+
 
 }

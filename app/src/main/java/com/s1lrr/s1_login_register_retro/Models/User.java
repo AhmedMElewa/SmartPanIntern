@@ -9,6 +9,8 @@ public class User {
     String url;
     int id;
 
+
+
     public String getUrl() {
         return url;
     }

@@ -19,6 +19,14 @@ public class City {
     @Expose
     private String englishName;
 
+    public City(Integer id, String englishName) {
+        this.id = id;
+        this.englishName = englishName;
+    }
+
+    public City() {
+    }
+
     public Integer getId() {
         return id;
     }

@@ -5,26 +5,38 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fourhcode.forhutils.FUtilsValidation;
-import com.s1lrr.s1_login_register_retro.Models.User;
+import com.s1lrr.s1_login_register_retro.Models.*;
+import com.s1lrr.s1_login_register_retro.Models.City;
 import com.s1lrr.s1_login_register_retro.Presenter.UserPresneter;
 import com.s1lrr.s1_login_register_retro.R;
+import com.s1lrr.s1_login_register_retro.Views.CityView;
 import com.s1lrr.s1_login_register_retro.Views.RegisterView;
 
-public class Register extends AppCompatActivity implements RegisterView {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-    UserPresneter userPresenter;
+public class Register extends AppCompatActivity implements RegisterView,CityView{
+
+    UserPresneter userPresenter,userPresenter2;
     EditText address,mail,name,phone,password;
     CheckBox maleCheckBox,femaleCheckBox;
     TextView register;
     String gender;
+    Spinner spCountry;
+    HashMap<Integer,String> spinnerMap = new HashMap<Integer, String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +51,10 @@ public class Register extends AppCompatActivity implements RegisterView {
         name=findViewById(R.id.name);
         phone=findViewById(R.id.phone);
         password=findViewById(R.id.password);
-        register=findViewById(R.id.register);
+        register=findViewById(R.id.txtSignUp);
         maleCheckBox = findViewById(R.id.maleCheckBox);
         femaleCheckBox = findViewById(R.id.femaleCheckBox);
+        spCountry = findViewById(R.id.spCountry);
 
         maleCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +72,11 @@ public class Register extends AppCompatActivity implements RegisterView {
         });
 
 
-        userPresenter=new UserPresneter(this,this);
 
 
+        userPresenter= new UserPresneter(this, (RegisterView) this);
+        userPresenter2 = new UserPresneter(this, (CityView) this);
+        userPresenter2.getCities();
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,13 +94,15 @@ public class Register extends AppCompatActivity implements RegisterView {
                         (maleCheckBox.isChecked() || femaleCheckBox.isChecked())&& FUtilsValidation.isLengthCorrect(password.getText().toString(), 8, 16))
                 {
                     User user = new User();
+                    final City city = new City();
                     user.setAddress(address.getText().toString());
                     user.setMail(mail.getText().toString());
                     user.setName(name.getText().toString());
                     user.setPhone(phone.getText().toString());
                     user.setPassword(password.getText().toString());
                     user.setGender(gender);
-                    userPresenter.register(user);
+                    city.setId(Integer.valueOf(spinnerMap.get(spCountry.getSelectedItemPosition())));
+                    userPresenter.register(user,city);
                 }
             }
         });
@@ -96,11 +113,43 @@ public class Register extends AppCompatActivity implements RegisterView {
     public void openMain() {
         Intent intent=new Intent(Register.this,MainActivity.class);
         startActivity(intent);
+        finish();
 
     }
 
     @Override
     public void showError(String error) {
-        Toast.makeText(this,error,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),error, Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void showList(List<City> cities) {
+        String[] spinnerArray = new String[cities.size()];
+
+        for (int i = 0; i < cities.size(); i++)
+        {
+            spinnerMap.put(i,cities.get(i).getId().toString());
+            spinnerArray[i] = cities.get(i).getEnglishName();
+        }
+
+        ArrayAdapter<String> adapter =new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, spinnerArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spCountry.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == android.R.id.home) {
+            // finish the activity
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

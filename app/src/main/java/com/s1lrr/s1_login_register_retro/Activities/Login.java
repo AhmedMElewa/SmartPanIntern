@@ -25,7 +25,6 @@ public class Login extends AppCompatActivity implements LoginView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Login");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2C3646")));
 
@@ -55,10 +54,13 @@ public class Login extends AppCompatActivity implements LoginView {
     public void OpenMain(User user) {
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
     public void ErrorMessage() {
         Toast.makeText(getApplicationContext(),"error", Toast.LENGTH_LONG).show();
     }
+
+
 }

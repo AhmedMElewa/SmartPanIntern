@@ -98,6 +98,7 @@
             android:hint="Address"
             android:textColorHint="#a9b0c3"
             android:layout_marginTop="50dp"
+            android:inputType="text"
             android:textSize="13dp"
             android:background="#00000000"
             android:paddingLeft="8dp"
@@ -175,6 +176,7 @@
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+
                 />
 
 
