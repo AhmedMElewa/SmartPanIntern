@@ -1,5 +1,6 @@
 package com.s1lrr.s1_login_register_retro.Views;
 
+import com.s1lrr.s1_login_register_retro.Models.Cart;
 import com.s1lrr.s1_login_register_retro.Models.Item;
 
 import java.util.List;
@@ -10,5 +11,7 @@ import java.util.List;
 
 public interface itemsView {
     public void showList(List<Item> cities);
+    public void cartsize(String counter);
+    public void showListCart(List<Cart> carts);
 }
 

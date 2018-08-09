@@ -1,7 +1,6 @@
 package com.s1lrr.s1_login_register_retro.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.s1lrr.s1_login_register_retro.Activities.Items;
-import com.s1lrr.s1_login_register_retro.Models.Category;
+import com.s1lrr.s1_login_register_retro.Models.Cart;
 import com.s1lrr.s1_login_register_retro.Models.Item;
 import com.s1lrr.s1_login_register_retro.R;
+import com.s1lrr.s1_login_register_retro.Views.CartView;
+import com.s1lrr.s1_login_register_retro.Views.itemsView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,10 +26,21 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.RecyclerView
 
     private List<Item> results;
     Context context;
-
-
+    public static List<Cart> carts =new ArrayList<>() ;
+    com.s1lrr.s1_login_register_retro.Models.Cart cart;
+//    CartView cartView ;
+    itemsView itemsView;
 //    public ItemsAdapter(List<Item> results){
 //        this.results = results;
+//    }
+
+
+    public void kiki(com.s1lrr.s1_login_register_retro.Views.itemsView itemsView) {
+        this.itemsView = itemsView;
+    }
+
+//    public void kiki2(CartView cartView) {
+//        this.cartView = cartView;
 //    }
 
     public ItemsAdapter(List<Item> results, Context context) {
@@ -40,7 +52,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.RecyclerView
 
     @Override
     public ItemsAdapter.RecyclerViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.catageories_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_item, viewGroup, false);
         return new ItemsAdapter.RecyclerViewHolder(view);
     }
 
@@ -51,8 +63,43 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.RecyclerView
         final Item item = results.get(position);
         holder.catName.setText(item.getEnglishName());
         Picasso.get().load(item.getImageUrl()).into(holder.catImage);
+        holder.catprice.setText(String.valueOf(item.getPrice()));
+        carts = new ArrayList<>();
+
+        holder.txtplus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int current = Integer.valueOf(holder.txtquanitiy.getText().toString());
+                holder.txtquanitiy.setText(String.valueOf(current+1));
+            }
+        });
 
 
+        holder.txtminus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int current = Integer.valueOf(holder.txtquanitiy.getText().toString());
+                if (current>=1){
+                    holder.txtquanitiy.setText(String.valueOf(current-1));
+                }else {
+                    holder.txtquanitiy.setText("0");
+                }
+
+            }
+        });
+
+        holder.txtAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cart = new com.s1lrr.s1_login_register_retro.Models.Cart(Double.parseDouble(holder.catprice.getText().toString()),
+                        java.lang.Integer.parseInt(holder.txtquanitiy.getText().toString()),holder.catName.getText().toString(),
+                        item.getImageUrl());
+                carts.add(cart);
+                itemsView.cartsize(String.valueOf(carts.size()));
+                itemsView.showListCart(carts);
+//                cartView.showList(carts);
+            }
+        });
 
 
     }
@@ -66,7 +113,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.RecyclerView
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder  {
 
-        public TextView catName;
+        public TextView catName,txtplus,txtquanitiy,txtminus,txtAdd,catprice;
         public ImageView catImage;
 
 
@@ -75,6 +122,11 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.RecyclerView
             super(itemView);
 
             catName = (TextView)itemView.findViewById(R.id.catName);
+            txtplus = (TextView)itemView.findViewById(R.id.txtplus);
+            txtquanitiy = (TextView)itemView.findViewById(R.id.txtquanitiy);
+            txtminus = (TextView)itemView.findViewById(R.id.txtminus);
+            txtAdd = (TextView)itemView.findViewById(R.id.txtAdd);
+            catprice = (TextView)itemView.findViewById(R.id.catprice);
             catImage = (ImageView) itemView.findViewById(R.id.catImage);
 
         }

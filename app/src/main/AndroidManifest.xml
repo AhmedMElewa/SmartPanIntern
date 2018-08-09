@@ -11,36 +11,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.MainActivity"
+        <activity
+            android:name=".Activities.MainActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:windowSoftInputMode="stateHidden"
-            >
-        </activity>
-        <activity android:name=".Activities.Login"
-            android:configChanges="keyboardHidden|orientation"
-            android:windowSoftInputMode="stateHidden"
-            >
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.City"
+        <activity
+            android:name=".Activities.Login"
             android:configChanges="keyboardHidden|orientation"
-            android:windowSoftInputMode="stateHidden"
-            >
-        </activity>
-        <activity android:name=".Activities.Register"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".Activities.City"
             android:configChanges="keyboardHidden|orientation"
-            android:windowSoftInputMode="stateHidden"
-            >
-
-        </activity>
-        <activity android:name=".Activities.Items"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".Activities.Register"
             android:configChanges="keyboardHidden|orientation"
-            android:windowSoftInputMode="stateHidden"
-            ></activity>
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".Activities.Items"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Activities.Cart"></activity>
     </application>
 
 </manifest>

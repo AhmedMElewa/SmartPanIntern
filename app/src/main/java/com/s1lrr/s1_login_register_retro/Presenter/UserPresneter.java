@@ -165,6 +165,8 @@ public class UserPresneter {
     }
 
 
+
+
     public void register(User user,City city) {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("name", user.getName());
