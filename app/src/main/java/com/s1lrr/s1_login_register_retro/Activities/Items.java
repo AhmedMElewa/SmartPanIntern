@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.s1lrr.s1_login_register_retro.Adapter.ItemsAdapter;
 import com.s1lrr.s1_login_register_retro.Models.*;
@@ -17,14 +18,17 @@ import com.s1lrr.s1_login_register_retro.Views.itemsView;
 
 import java.util.List;
 
+import static com.s1lrr.s1_login_register_retro.Adapter.ItemsAdapter.carts;
+
 public class Items extends AppCompatActivity implements itemsView {
 
     private ItemsAdapter itemsAdapter;
     private RecyclerView recyclerItmes;
     private GridLayoutManager gridLayoutManager;
     private UserPresneter userPresneter;
-    private TextView cartQ;
+    private android.support.v7.widget.Toolbar cartQ;
     private ItemsAdapter itemsAdapter2;
+    private TextView CartQQ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,9 @@ public class Items extends AppCompatActivity implements itemsView {
         userPresneter.getItems();
 
 
-        cartQ = (TextView)findViewById(R.id.cartQ);
+        cartQ = (android.support.v7.widget.Toolbar) findViewById(R.id.cartQ);
+        CartQQ = (TextView)findViewById(R.id.CartQQ);
+
         cartQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,7 +70,7 @@ public class Items extends AppCompatActivity implements itemsView {
 
     @Override
     public void cartsize(String counter) {
-        cartQ.setText(counter);
+        CartQQ.setText(counter);
     }
 
     @Override
@@ -72,5 +78,10 @@ public class Items extends AppCompatActivity implements itemsView {
 
     }
 
-
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        CartQQ.setText(String.valueOf(carts.size()));
+    }
 }

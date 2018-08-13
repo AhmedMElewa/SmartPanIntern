@@ -30,6 +30,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.RecyclerView
     com.s1lrr.s1_login_register_retro.Models.Cart cart;
 //    CartView cartView ;
     itemsView itemsView;
+    int id = 0;
 //    public ItemsAdapter(List<Item> results){
 //        this.results = results;
 //    }
@@ -79,10 +80,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.RecyclerView
             @Override
             public void onClick(View view) {
                 int current = Integer.valueOf(holder.txtquanitiy.getText().toString());
-                if (current>=1){
+                if (current>1){
                     holder.txtquanitiy.setText(String.valueOf(current-1));
                 }else {
-                    holder.txtquanitiy.setText("0");
+                    holder.txtquanitiy.setText("1");
                 }
 
             }
@@ -93,10 +94,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.RecyclerView
             public void onClick(View view) {
                 cart = new com.s1lrr.s1_login_register_retro.Models.Cart(Double.parseDouble(holder.catprice.getText().toString()),
                         java.lang.Integer.parseInt(holder.txtquanitiy.getText().toString()),holder.catName.getText().toString(),
-                        item.getImageUrl());
+                        item.getImageUrl(),id);
+                id =id+1;
                 carts.add(cart);
                 itemsView.cartsize(String.valueOf(carts.size()));
                 itemsView.showListCart(carts);
+                holder.txtquanitiy.setText("1");
 //                cartView.showList(carts);
             }
         });

@@ -21,15 +21,27 @@ public class Cart {
     @SerializedName("imageUrl")
     @Expose
     private String imageUrl;
+    @SerializedName("id")
+    @Expose
+    private int id;
 
     public Cart() {
     }
 
-    public Cart(Double price, Integer quantity, String name, String imageUrl) {
+    public Cart(Double price, Integer quantity, String name, String imageUrl, int id) {
         this.price = price;
         this.quantity = quantity;
         this.name = name;
         this.imageUrl = imageUrl;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Double getPrice() {
